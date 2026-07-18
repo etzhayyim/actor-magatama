@@ -1,0 +1,9 @@
+{:actor/id :magatama
+ :actor/did "did:web:etzhayyim.com:magatama"
+ :actor/runtime :cljc
+ :actor/cells [:shionome-flow-graph :shionome-ingest :shionome-regime-observer
+               :shionome-rotation-weave :shionome-social-post
+               :suimin-disclaimer-gate :suimin-evidence-grade
+               :suimin-referral-router :suimin-source-ingest
+               :suimin-treatment-synthesize]
+ :actor/canonical-format :edn}
