@@ -6,7 +6,8 @@
   flow kind AND on every dry-run post body; only capital-movement kinds feed the money math.
   Nothing here is a buy/sell signal, price target, or portfolio instruction.
 
-  Stdlib only. Deterministic.")
+  Stdlib only. Deterministic."
+  (:require [kotoba.lang.text]))
 
 ;; ── Constants ────────────────────────────────────────────────────────────────────
 
@@ -29,15 +30,15 @@
   "Strip leading `:` and namespace prefix, lowercase — mirrors Python _kw()."
   [v]
   (let [s (-> (str (or v ""))
-              (clojure.string/replace #"^:" ""))]
-    (-> (last (clojure.string/split s #"/"))
-        clojure.string/lower-case)))
+              (kotoba.lang.text/replace #"^:" ""))]
+    (-> (last (kotoba.lang.text/split s #"/"))
+        kotoba.lang.text/lower)))
 
 (defn trade-token-in
   "Returns the first trade token found in text, or empty string."
   [text]
-  (let [blob (clojure.string/lower-case (str (or text "")))]
-    (or (some #(when (clojure.string/includes? blob %) %) trade-tokens) "")))
+  (let [blob (kotoba.lang.text/lower (str (or text "")))]
+    (or (some #(when (kotoba.lang.text/includes? blob %) %) trade-tokens) "")))
 
 ;; ── Core logic ───────────────────────────────────────────────────────────────────
 
@@ -56,7 +57,7 @@
         (throw (ex-info (str "G2: flow kind " (pr-str kind) " not a factual observation")
                         {:gate :g2 :kind kind})))
       (let [sources (or (get f :sources) (get f "sources") [])
-            valid-count (count (filter #(not= (clojure.string/trim (str %)) "") sources))]
+            valid-count (count (filter #(not= (kotoba.lang.text/trim (str %)) "") sources))]
         (when (< valid-count 2)
           (throw (ex-info "G3: a flow needs >=2 public-source citations"
                           {:gate :g3 :sources sources}))))))
@@ -138,7 +139,7 @@
       (throw (ex-info (str "G2: post body contains trade token " (pr-str t)
                            " — refused (トレードはしない)")
                       {:gate :g2 :token t}))))
-  (let [valid-sources (filter #(not= (clojure.string/trim (str %)) "") (or sources []))]
+  (let [valid-sources (filter #(not= (kotoba.lang.text/trim (str %)) "") (or sources []))]
     (when (< (count valid-sources) 2)
       (throw (ex-info "G3: a post needs >=2 public-source citations"
                       {:gate :g3}))))
