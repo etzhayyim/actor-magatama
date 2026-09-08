@@ -1,7 +1,7 @@
 (ns magatama.cells.test-cells
   "clojure.test tests for ported magatama shionome + suimin cells.
   Run via: bb --classpath 20-actors -e \"(require 'magatama.cells.test-cells)\""
-  (:require [clojure.test :refer [deftest is testing run-tests]]
+  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing run-tests]]
             [magatama.cells.shionome-core :as sc]
             [magatama.cells.shionome-flow-graph.state-machine :as fg]
             [magatama.cells.shionome-ingest.state-machine :as ing]
@@ -95,7 +95,7 @@
       (is (= (get p "is_mirror") true))
       (is (= (get p "no_trade_notice") true))
       (is (= (get p "server_held_key") false))
-      (is (clojure.string/includes? (get p "body") "トレードはしない")))))
+      (is (kotoba.lang.text/includes? (get p "body") "トレードはしない")))))
 
 (deftest test-draft-dry-run-post-refuses-trade-body
   (testing "draft-dry-run-post refuses trade token in body"
@@ -123,7 +123,7 @@
 (deftest test-ingest-run-chain-refuses-trade-token
   (testing "ingest run-chain refuses trade-token batch"
     (let [result (ing/run-chain {:context {:market_batch [{:kind "buy" :sources ["a" "b"]}]}})]
-      (is (clojure.string/includes? (:refusal result) "G2"))
+      (is (kotoba.lang.text/includes? (:refusal result) "G2"))
       (is (empty? (:flows result))))))
 
 (deftest test-regime-observer-run-chain
@@ -154,7 +154,7 @@
   (testing "social-post run-chain captures refusal on < 2 sources"
     (let [result (sp/run-chain {:regime {"regime" "risk-on" "risk_net" 1.0 "safe_net" 0.0}
                                 :context {:sources ["a"]}})]
-      (is (clojure.string/includes? (:refusal result) "G3"))
+      (is (kotoba.lang.text/includes? (:refusal result) "G3"))
       (is (= (:post result) {})))))
 
 ;; ── Suimin Council gate tests ─────────────────────────────────────────────────────
