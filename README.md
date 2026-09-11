@@ -12,4 +12,4 @@ evidence, and route a person toward local care; it cannot diagnose, recommend
 individual treatment, change a device setting, or publish live without the
 existing disclaimer, Council, operator, and signature gates.
 
-Run the complete offline suite with `bb test`.
+Run the complete offline suite with `kbb -M:test`.
