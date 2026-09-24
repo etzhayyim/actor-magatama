@@ -1,7 +1,7 @@
 (ns magatama.cells.test-cells
   "clojure.test tests for ported magatama shionome + suimin cells.
   Run via: kbb --classpath 20-actors -e \"(require 'magatama.cells.test-cells)\""
-  (:require [kotoba.lang.text] [clojure.test :refer [deftest is testing run-tests]]
+  (:require [kotoba.lang.text] [kotoba.test :refer [deftest is testing run-tests]]
             [magatama.cells.shionome-core :as sc]
             [magatama.cells.shionome-flow-graph.state-machine :as fg]
             [magatama.cells.shionome-ingest.state-machine :as ing]
