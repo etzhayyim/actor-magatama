@@ -13,7 +13,7 @@
 (cp/add-classpath (str (fs/path (fs/parent (fs/absolutize *file*)) "src")))
 (cp/add-classpath (str (fs/path (fs/parent (fs/absolutize *file*)) "test")))
 
-(require '[clojure.test :as t]
+(require '[kotoba.test :as t]
          'magatama.cells.test-cells
          'magatama.repository-contract-test)
 
